@@ -21,16 +21,16 @@ This is a line oriented parser. It is designed to support both transforming each
 
 ###The transformation plan has this form:
 
-  plan = { curr_state1: protocol1,
-           curr_state2: protocol2,
-           ... }
+    plan = { curr_state1: protocol1,
+             curr_state2: protocol2,
+             ... }
 
-  protocol1 =  [ rule1, rule2, ... ]
+    protocol1 =  [ rule1, rule2, ... ]
 
-  rule1 = { event:     ->(line) { test1(line) },
-            new_state: :another_state,
-            lam:       ->(line) { transform1(line) }
-          }
+    rule1 = { event:     ->(line) { test1(line) },
+              new_state: :another_state,
+              lam:       ->(line) { transform1(line) }
+            }
 
 test **must** return true or false. It **should not** alter line nor have other side effects.
 
