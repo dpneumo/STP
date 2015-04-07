@@ -21,20 +21,21 @@ This is a line oriented parser. It is designed to support both transforming each
 
 ###The transformation plan has this form:
 
-    plan = { curr_state1: protocol1,
-             curr_state2: protocol2,
-             ... }
+plan = { curr_state1: protocol1,
+         curr_state2: protocol2,
+         ... }
 
-    protocol1 =  [ rule1, rule2, ... ]
+protocol1 =  [ rule1, rule2, ... ]
 
-    rule1 = { event:     ->(line) { test1(line) },
-              new_state: :another_state,
-              lam:       ->(line) { transform1(line) }
-            }
+rule1 = { event:     ->(line) { test1(line) },
+          new_state: :another_state,
+          lam:       ->(line) { transform1(line) }
+        }
 
-    test **must** return true or false. It **should not** alter line nor have other side effects.
+test **must** return true or false. It **should not** alter line nor have other side effects.
 
-    lam may transform line. It **must** return either the unaltered line, the transformed line or nil. It may have side effects. eg. lam might push the transformed line into a file.
+lam may transform line. It **must** return either the unaltered line, the transformed line
+or nil. It **may** have side effects. eg. lam might push the transformed line into a file.
 
 
 ###Summary of the state machine internals:
