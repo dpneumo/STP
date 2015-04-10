@@ -3,7 +3,7 @@ class Plan
   attr_accessor :current_state
 
   def transition(line)
-    protocol.detect {|rule| rule[:event].call(line) }
+    protocol.detect {|event| event[:test].call(line) }
   end
 
 

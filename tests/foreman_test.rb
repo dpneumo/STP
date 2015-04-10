@@ -1,13 +1,15 @@
 require 'minitest/autorun'
 require 'pry'
+require 'test_helper.rb'
 require_relative '../lib/foreman'
 
 class ForemanTest < MiniTest::Test
   def setup
-    plan = { beginning: [ {event: ->(line) { /REa/.match line }, new_state: :middle,    lam: ->(line) { line.upcase   } },
-                           {event: ->(line) { /REb/.match line }, new_state: :ending,    lam: ->(line) { line.reverse  } }  ],
-              middle:    [ {event: ->(line) { /REc/.match line }, new_state: :ending,    lam: ->(line) { line.downcase } }  ],
-              ending:    [ {event: ->(line) { /REd/.match line }, new_state: :beginning, lam: ->(line) { line.swapcase } }  ],
+    plan = { beginning: [ {test: ->(line) { /REa/.match line }, new_state: :middle,    lam: ->(line) { line.upcase   } },
+                          {test: ->(line) { /REb/.match line }, new_state: :ending,    lam: ->(line) { line.reverse  } },
+                          {test: ->(line) { true },             new_state: :beginning, lam: ->(line) { line          } }  ],
+              middle:   [ {test: ->(line) { /REc/.match line }, new_state: :ending,    lam: ->(line) { line.downcase } }  ],
+              ending:   [ {test: ->(line) { /REd/.match line }, new_state: :beginning, lam: ->(line) { line.swapcase } }  ],
             }
     @fm = Foreman.new( coderunner: MiniTest::Mock.new,
                        plan:       Plan.new(master: plan) )

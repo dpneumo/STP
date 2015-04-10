@@ -1,5 +1,6 @@
 require 'minitest/autorun'
 require 'pry'
+require 'test_helper.rb'
 require_relative '../lib/code_runner'
 
 class CodeRunnerTest < MiniTest::Test

@@ -1,20 +1,30 @@
 require 'minitest/autorun'
 require 'pry'
+require 'test_helper.rb'
 require_relative '../lib/stp'
 
 class STPTest < MiniTest::Test
   def setup
-    plan = { beginning: [ {event: ->(line) { /Prevailed/.match line },
+    plan = { beginning: [ { test: ->(line) { /Prevailed/.match line },
                             new_state: :middle,
-                            lam: ->(line) { line.upcase   } }  ],
-
-              middle:    [ {event: ->(line) { /at no/.match line },
-                            new_state: :ending,
-                            lam: ->(line) { line.downcase } }  ],
-
-              ending:    [ {event: ->(line) { /On dear/.match line },
+                            lam: ->(line) { line.upcase   } },
+                          { test: ->(line) { true },
                             new_state: :beginning,
-                            lam: ->(line) { line.swapcase } }  ],
+                            lam: ->(line) { line          } }  ],
+
+              middle:    [ {test: ->(line) { /at no/.match line },
+                            new_state: :ending,
+                            lam: ->(line) { line.downcase } },
+                          { test: ->(line) { true },
+                            new_state: :middle,
+                            lam: ->(line) { line.upcase          } }  ],
+
+              ending:    [ {test: ->(line) { /On dear/.match line },
+                            new_state: :beginning,
+                            lam: ->(line) { line.swapcase } },
+                          { test: ->(line) { true },
+                            new_state: :ending,
+                            lam: ->(line) { line.downcase          } }  ],
             }
     arry_doc = [ "departure\n",
                  "Prevailed sincerity\n",
@@ -29,7 +39,7 @@ class STPTest < MiniTest::Test
                  "TO SO DO PRINCIPLE\n",
                  "at no propriety\n",
                  "oN DEAR RENT\n",
-                 "SMART THERE\n" ]
+                 "smart there\n" ]
 
     @stp_str = STP.new(plan: plan, document: str_doc)
     @stp_ary = STP.new(plan: plan, document: arry_doc)
