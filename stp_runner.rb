@@ -27,14 +27,7 @@ plan = {  beginning: [ {event: ->(line) { atest line },
 
 beginning_lambda = ->(line) { nil }
 
-document = <<EOP
-asdf
-Prevailed sincerity behaviour
-to so do principle mr. As departure
-at no propriety zealously my.
-On dear rent if girl view. First on
-smart there he sense. Earnestly
-EOP
-
-stp = STP.new( plan: plan, beginning_lambda: beginning_lambda, document: document )
-stp.each {|line| puts line }
+File.open(LabResults_20150331.TXT) do |document|
+  stp = STP.new( plan: plan, beginning_lambda: beginning_lambda, document: document )
+  stp.each {|line| puts line }
+end
