@@ -1,5 +1,5 @@
 class Plan
-  attr_reader :initial_lambda
+  attr_reader :transforms
   attr_accessor :current_state
 
   def transition(line)
@@ -11,9 +11,9 @@ private
   attr_reader :master
 
   def initialize(opts={})
-    @master =         opts.fetch :master,        {}
-    @current_state =  opts.fetch :initial_state, :beginning
-    @initial_lambda = opts.fetch :initial_lambda, ->(line) { line }
+    @master =        opts.fetch :master,         {}
+    @current_state = opts.fetch :initial_state,  :beginning
+    @transforms =    opts.fetch :transforms, [ ->(line) { line } ]
   end
 
   def protocol

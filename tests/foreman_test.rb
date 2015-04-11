@@ -5,15 +5,15 @@ require_relative '../lib/foreman'
 
 class ForemanTest < MiniTest::Test
   def setup
-    plan = { beginning: [ {test: ->(line) { /REa/.match line }, new_state: :middle,    lam: ->(line) { line.upcase   } },
-                          {test: ->(line) { /REb/.match line }, new_state: :ending,    lam: ->(line) { line.reverse  } },
-                          {test: ->(line) { true },             new_state: :beginning, lam: ->(line) { line          } }  ],
-              middle:   [ {test: ->(line) { /REc/.match line }, new_state: :ending,    lam: ->(line) { line.downcase } }  ],
-              ending:   [ {test: ->(line) { /REd/.match line }, new_state: :beginning, lam: ->(line) { line.swapcase } }  ],
+    plan = { beginning: [ {test: ->(line) { /REa/.match line }, new_state: :middle,    transforms: [->(line) { line.upcase   }] },
+                          {test: ->(line) { /REb/.match line }, new_state: :ending,    transforms: [->(line) { line.reverse  }] },
+                          {test: ->(line) { true },             new_state: :beginning, transforms: [->(line) { line          }] }  ],
+              middle:   [ {test: ->(line) { /REc/.match line }, new_state: :ending,    transforms: [->(line) { line.downcase }] }  ],
+              ending:   [ {test: ->(line) { /REd/.match line }, new_state: :beginning, transforms: [->(line) { line.swapcase }] }  ],
             }
     @fm = Foreman.new( coderunner: MiniTest::Mock.new,
                        plan:       Plan.new(master: plan) )
-    @fm.coderunner.expect :mylambda=, nil, [->(line) { line }]
+    @fm.coderunner.expect :transforms=, nil, [->(line) { line }]
   end
 
   def test_correctly_handles_transition_when_line_matches_an_allowed_transition

@@ -26,17 +26,17 @@ private
     @document = opts.fetch :document, []
 
     master = opts.fetch :plan, {}
-    init_lam = opts.fetch(:beginning_lambda, nil)
-    @plan = Plan.new(plan_opts(master, init_lam))
+    init_transforms = opts.fetch(:initial_transforms, nil)
+    @plan = Plan.new(plan_opts(master, init_transforms))
 
     @code_runner = CodeRunner.new( plan: @plan )
     @foreman =     Foreman.new( coderunner: code_runner, plan: @plan )
     @mapper =      Mapper.new(  coderunner: code_runner, foreman: foreman )
   end
 
-  def plan_opts(master, init_lam)
+  def plan_opts(master, init_transforms)
     po = { master: master }
-    po.merge({ initial_lambda: init_lam }) if init_lam
+    po.merge({ initial_lambda: init_transforms }) if init_transforms
     po
   end
 

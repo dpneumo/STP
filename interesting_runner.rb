@@ -13,7 +13,7 @@ include FindInterestingRpts
 plan = { beginning: [ rpt_start_evnt, skip_line_evnt ],
          new_rpt:   [ rpt_end_evnt, interesting_evnt, rpt_readln_evnt ],
          wait4rpt:  [ rpt_start_evnt, skip_line_evnt ]
-        }
+       }
 
 beginning_lambda = ->(line) { nil }
 

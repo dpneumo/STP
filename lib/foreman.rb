@@ -21,7 +21,7 @@ private
   def configure_for(line)
     event = plan.transition(line)
     #if event
-      coderunner.mylambda = event[:lam]
+      coderunner.transforms = event[:transforms]
       plan.current_state = event[:new_state]
     #end
   end

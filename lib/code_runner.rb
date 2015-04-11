@@ -1,5 +1,5 @@
 class CodeRunner
-  attr_accessor :mylambda
+  attr_accessor :transforms
 
   def call(line)
     submit_line(line)
@@ -8,11 +8,11 @@ class CodeRunner
 
 private
   def initialize(opts={})
-    plan =      opts.fetch :plan
-    @mylambda = plan.initial_lambda
+    plan =        opts.fetch :plan
+    @transforms = plan.transforms
   end
 
   def submit_line(line)
-    mylambda.call(line)
+    transforms.reduce(line) {|line, xform| xform.call(line) }
   end
 end

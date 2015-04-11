@@ -9,8 +9,8 @@ class CodeRunnerTest < MiniTest::Test
     @cr = CodeRunner.new(plan: Plan.new)
   end
 
-  def test_can_call_code_stored_in_lam
-    @cr.mylambda = ->(line) { line + '-' + line }
+  def test_can_call_code_stored_in_transforms
+    @cr.transforms = [ ->(line) { line + '-' + line } ]
     assert_equal 'newline-newline', @cr.call('newline')
   end
 
