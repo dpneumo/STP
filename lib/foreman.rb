@@ -20,9 +20,8 @@ private
 
   def configure_for(line)
     event = plan.transition(line)
-    #if event
-      coderunner.transforms = event[:transforms]
-      plan.current_state = event[:new_state]
-    #end
+    coderunner.actions = event[:actions]
+    coderunner.transforms = event[:transforms]
+    plan.current_state = event[:new_state]
   end
 end

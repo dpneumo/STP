@@ -6,7 +6,7 @@ require_relative '../lib/code_runner'
 class CodeRunnerTest < MiniTest::Test
 
   def setup
-    @cr = CodeRunner.new(plan: Plan.new)
+    @cr = CodeRunner.new#(plan: Plan.new)
   end
 
   def test_can_call_code_stored_in_transforms

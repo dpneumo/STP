@@ -12,22 +12,43 @@ def atest(line)
   /Prevailed/.match line
 end
 
-plan = {  beginning: [ {event: ->(line) { atest line },
+plan = { beginning: [ { test: ->(line) { atest line },
                         new_state: :middle,
-                        lam: ->(line) { line.upcase   } }  ],
-
-          middle:    [ {event: ->(line) { /at no/.match line },
-                        new_state: :ending,
-                        lam: ->(line) { line.downcase } }  ],
-
-          ending:    [ {event: ->(line) { /On dear/.match line },
+                        actions: [],
+                        transforms: [->(line) { line.upcase   }] },
+                      { test: ->(line) { true },
                         new_state: :beginning,
-                        lam: ->(line) { line.swapcase } }  ],
-        }
+                        actions: [],
+                        transforms: [->(line) { line          }] }  ],
 
-beginning_lambda = ->(line) { nil }
+          middle:    [ {test: ->(line) { /at no/.match line },
+                        new_state: :ending,
+                        actions: [],
+                        transforms: [->(line) { line.downcase }] },
+                      { test: ->(line) { true },
+                        new_state: :middle,
+                        actions: [],
+                        transforms: [->(line) { line.upcase          }] }  ],
 
-File.open(LabResults_20150331.TXT) do |document|
-  stp = STP.new( plan: plan, beginning_lambda: beginning_lambda, document: document )
-  stp.each {|line| puts line }
-end
+          ending:    [ {test: ->(line) { /On dear/.match line },
+                        new_state: :beginning,
+                        actions: [],
+                        transforms: [->(line) { line.swapcase }] },
+                      { test: ->(line) { true },
+                        new_state: :ending,
+                        actions: [],
+                        transforms: [->(line) { line.downcase          }] }  ]
+       }
+
+initial_transforms = [->(line) { nil }]
+
+document =  [ "departure\n",
+              "Prevailed sincerity\n",
+              "to so do principle\n",
+              "at no propriety\n",
+              "On dear rent\n",
+              "smart there\n" ]
+
+stp = STP.new( plan: plan, initial_transforms: initial_transforms, document: document )
+stp.each {|line| puts line }
+

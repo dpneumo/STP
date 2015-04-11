@@ -1,4 +1,4 @@
-class EventTest
+class Test
   attr_reader :lam
   def initialize(lam=nil)
     @lam = lam || ->(line) { false }

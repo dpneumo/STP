@@ -1,10 +1,10 @@
 module FindInterestingRpts
   attr_accessor :rpt, :interesting
 
-  nothing_happened? = EventTest.new( ->(line) { true } )
-  new_report? = EventTest.new( ->(line) { /Page 1/.match line } )
-  end_of_report? = EventTest.new( ->(line) { /80\: (LabCorp)|(Quest)/.match line } )
-  interesting? = EventTest.new( ->(line) { /^\s*Eos/ } )
+  nothing_happened? = Test.new( ->(line) { true } )
+  new_report? = Test.new( ->(line) { /Page 1/.match line } )
+  end_of_report? = Test.new( ->(line) { /80\: (LabCorp)|(Quest)/.match line } )
+  interesting? = Test.new( ->(line) { /^\s*Eos/ } )
 
 
   init_report = Action.new( ->(line) { rpt = [] } )

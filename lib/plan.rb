@@ -1,5 +1,5 @@
 class Plan
-  attr_reader :transforms
+  attr_reader :transforms, :actions
   attr_accessor :current_state
 
   def transition(line)
@@ -13,6 +13,7 @@ private
   def initialize(opts={})
     @master =        opts.fetch :master,         {}
     @current_state = opts.fetch :initial_state,  :beginning
+    @actions =       opts.fetch :actions, []
     @transforms =    opts.fetch :transforms, [ ->(line) { line } ]
   end
 

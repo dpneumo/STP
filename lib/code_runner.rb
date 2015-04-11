@@ -1,5 +1,5 @@
 class CodeRunner
-  attr_accessor :transforms
+  attr_accessor :transforms, :actions
 
   def call(line)
     submit_line(line)
@@ -8,11 +8,13 @@ class CodeRunner
 
 private
   def initialize(opts={})
-    plan =        opts.fetch :plan
-    @transforms = plan.transforms
+    #plan =        opts.fetch :plan
+    @actions =    opts.fetch :actions, []
+    @transforms = opts.fetch :transforms, [ ->(line) { line } ]
   end
 
   def submit_line(line)
+    actions.reduce(line) {|line, action| action.call(line) }
     transforms.reduce(line) {|line, xform| xform.call(line) }
   end
 end
