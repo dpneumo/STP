@@ -2,6 +2,8 @@
 
 This is a line oriented parser. It is designed to support both transforming each line as it passes through the state machine and to allow side effects to be generated based on the line and the current state of the machine. This is a mapping operation with respect to the original source of the lines. That source is not altered. The transformed lines are returned in #lines as an array of strings in the order of the lines in the source.
 
+### Note: This ReadMe is somewhat out of date!
+
 ###The source document must be one of:
 
     a file:
@@ -69,6 +71,11 @@ Hopefully, this will be helpful to others. Corrections and suggestions for impro
 Mitch Kuppinger
 (dpneumo)
 
-
+ToDo:
+  1. Fix ReadMe.
+  2. Improve naming throughout the code base to align names with function.
+  3. Cleanup Forman interaction with Plan.
+  4. Cleanup Stp initialization.
+        initial_transforms aren't required and make no sense in this context.
 
 **NB:** This is described in reference to a document that acts like or can be coerced to be an array of strings. However, in reality an array of any objects can be supplied if the lambdas in each rule behave correctly when called with the objects.
