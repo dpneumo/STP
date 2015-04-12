@@ -5,7 +5,6 @@ class Mapper
     map(lines, &block)
   end
 
-
 private
   def initialize(opts={})
     @foreman    = opts.fetch :foreman

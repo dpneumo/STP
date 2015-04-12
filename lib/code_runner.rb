@@ -1,16 +1,22 @@
 class CodeRunner
-  attr_accessor :transforms, :actions
+  attr_reader :transforms, :actions
+
+  def transforms=(val)
+    @transforms = val if val
+  end
+
+  def actions=(val)
+    @actions = val if val
+  end
 
   def call(line)
     submit_line(line)
   end
 
-
 private
-  def initialize(opts={})
-    #plan =        opts.fetch :plan
-    @actions =    opts.fetch :actions, []
-    @transforms = opts.fetch :transforms, [ ->(line) { line } ]
+  def initialize()
+    @actions =    [ ->(line) {} ]
+    @transforms = [ ->(line) { line } ]
   end
 
   def submit_line(line)

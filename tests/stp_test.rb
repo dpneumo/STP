@@ -2,36 +2,15 @@ require 'minitest/autorun'
 require 'pry'
 require 'test_helper.rb'
 require_relative '../lib/stp'
+require_relative 'plan_helper'
 
 class STPTest < MiniTest::Test
+  include PlanHelper
   def setup
-    plan = { beginning: [ { test: ->(line) { /Prevailed/.match line },
-                            new_state: :middle,
-                            actions: [],
-                            transforms: [->(line) { line.upcase   }] },
-                          { test: ->(line) { true },
-                            actions: [],
-                            new_state: :beginning,
-                            transforms: [->(line) { line          }] }  ],
+    plan = { beginning: [ prevailed_evnt, skip_beg_line_evnt ],
+             middle:    [ at_no_evnt, skip_mid_line_evnt ],
+             ending:    [ on_dear_evnt, skip_end_line_evnt ] }
 
-              middle:    [ {test: ->(line) { /at no/.match line },
-                            new_state: :ending,
-                            actions: [],
-                            transforms: [->(line) { line.downcase }] },
-                          { test: ->(line) { true },
-                            new_state: :middle,
-                            actions: [],
-                            transforms: [->(line) { line.upcase          }] }  ],
-
-              ending:    [ {test: ->(line) { /On dear/.match line },
-                            new_state: :beginning,
-                            actions: [],
-                            transforms: [->(line) { line.swapcase }] },
-                          { test: ->(line) { true },
-                            new_state: :ending,
-                            actions: [],
-                            transforms: [->(line) { line.downcase          }] }  ],
-            }
     arry_doc = [ "departure\n",
                  "Prevailed sincerity\n",
                  "to so do principle\n",
@@ -45,7 +24,7 @@ class STPTest < MiniTest::Test
                  "TO SO DO PRINCIPLE\n",
                  "at no propriety\n",
                  "oN DEAR RENT\n",
-                 "smart there\n" ]
+                 "SMART THERE\n" ]
 
     @stp_str = STP.new(plan: plan, document: str_doc)
     @stp_ary = STP.new(plan: plan, document: arry_doc)

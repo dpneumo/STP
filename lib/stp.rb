@@ -17,7 +17,6 @@ class STP
     lines.map &block
   end
 
-
 private
   attr_reader :document, :plan,
               :code_runner, :foreman, :mapper
@@ -29,7 +28,7 @@ private
     init_transforms = opts.fetch(:initial_transforms, nil)
     @plan = Plan.new(plan_opts(master, init_transforms))
 
-    @code_runner = CodeRunner.new( plan: @plan )
+    @code_runner = CodeRunner.new
     @foreman =     Foreman.new( coderunner: code_runner, plan: @plan )
     @mapper =      Mapper.new(  coderunner: code_runner, foreman: foreman )
   end

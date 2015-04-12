@@ -7,34 +7,34 @@
 ###########################################
 require_relative 'lib/stp'
 
-def atest(line)
+def acheck(line)
   puts line
   /Prevailed/.match line
 end
 
-plan = { beginning: [ { test: ->(line) { atest line },
+plan = { beginning: [ { check: ->(line) { acheck line },
                         new_state: :middle,
                         actions: [],
                         transforms: [->(line) { line.upcase   }] },
-                      { test: ->(line) { true },
+                      { check: ->(line) { true },
                         new_state: :beginning,
                         actions: [],
                         transforms: [->(line) { line          }] }  ],
 
-          middle:    [ {test: ->(line) { /at no/.match line },
+          middle:    [ {check: ->(line) { /at no/.match line },
                         new_state: :ending,
                         actions: [],
                         transforms: [->(line) { line.downcase }] },
-                      { test: ->(line) { true },
+                      { check: ->(line) { true },
                         new_state: :middle,
                         actions: [],
                         transforms: [->(line) { line.upcase          }] }  ],
 
-          ending:    [ {test: ->(line) { /On dear/.match line },
+          ending:    [ {check: ->(line) { /On dear/.match line },
                         new_state: :beginning,
                         actions: [],
                         transforms: [->(line) { line.swapcase }] },
-                      { test: ->(line) { true },
+                      { check: ->(line) { true },
                         new_state: :ending,
                         actions: [],
                         transforms: [->(line) { line.downcase          }] }  ]

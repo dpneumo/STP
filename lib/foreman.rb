@@ -9,7 +9,6 @@ class Foreman
     plan.current_state
   end
 
-
 private
   attr_reader :plan
 

@@ -2,16 +2,10 @@ require 'minitest/autorun'
 require 'pry'
 require 'test_helper.rb'
 require_relative '../lib/mapper'
+require_relative '../lib/fake_foreman.rb'
+require_relative '../lib/fake_code_runner.rb'
 
 class MapperTest < MiniTest::Test
-  class FakeForeman
-    def call(line); nil; end
-  end
-
-  class FakeCodeRunner
-    def call(line); line.upcase; end
-  end
-
   def setup
     @mapper = Mapper.new(foreman: FakeForeman.new, coderunner: FakeCodeRunner.new)
     @lines = ["first\n", "second\n"]

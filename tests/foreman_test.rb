@@ -2,25 +2,20 @@ require 'minitest/autorun'
 require 'pry'
 require 'test_helper.rb'
 require_relative '../lib/foreman'
+require_relative '../lib/fake_code_runner.rb'
+require_relative '../lib/fake_plan'
 
 class ForemanTest < MiniTest::Test
   def setup
-    plan = { beginning: [ {test: ->(line) { /REa/.match line }, new_state: :middle,    actions: [], transforms: [->(line) { line.upcase   }] },
-                          {test: ->(line) { /REb/.match line }, new_state: :ending,    actions: [], transforms: [->(line) { line.reverse  }] },
-                          {test: ->(line) { true },             new_state: :beginning, actions: [], transforms: [->(line) { line          }] }  ],
-              middle:   [ {test: ->(line) { /REc/.match line }, new_state: :ending,    actions: [], transforms: [->(line) { line.downcase }] }  ],
-              ending:   [ {test: ->(line) { /REd/.match line }, new_state: :beginning, actions: [], transforms: [->(line) { line.swapcase }] }  ],
-            }
-    @fm = Foreman.new( coderunner: MiniTest::Mock.new,
-                       plan:       Plan.new(master: plan) )
-    @fm.coderunner.expect :actions=, nil, [[]]
-    @fm.coderunner.expect :transforms=, nil, [->(line) { line }]
+    @fm = Foreman.new( coderunner: FakeCodeRunner.new,
+                       plan:       FakePlan.new )
   end
 
   def test_correctly_handles_transition_when_line_matches_an_allowed_transition
-    @fm.call('REa')
+    @fm.call('line will match')
     assert_equal :middle, @fm.current_state
-    @fm.coderunner.verify
+    assert_equal [], @fm.coderunner.actions
+    assert_equal [], @fm.coderunner.transforms
   end
 
   def test_state_is_not_changed_if_line_does_not_match_an_allowed_transition
