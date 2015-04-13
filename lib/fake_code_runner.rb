@@ -11,5 +11,5 @@ class FakeCodeRunner
 
   def call(line)
       line.upcase
-    end
+  end
 end

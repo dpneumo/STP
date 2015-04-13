@@ -5,5 +5,9 @@ require_relative 'code_runner_interface_test'
 require_relative '../lib/fake_code_runner'
 
 class FakeCodeRunnerTest < MiniTest::Test
+  def setup
+    @cr = FakeCodeRunner.new
+  end
+
   include CodeRunnerInterfaceTest
 end

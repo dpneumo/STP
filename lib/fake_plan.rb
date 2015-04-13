@@ -1,9 +1,5 @@
 class FakePlan
   attr_accessor :current_state
-  def initialize(opts={})
-    @current_state = :beginning
-    @master =        opts.fetch :master, {}
-  end
 
   def transition(line)
     case line
@@ -18,5 +14,11 @@ class FakePlan
         actions: [],
         transforms: [] }
     end
+  end
+
+private
+  def initialize(opts={})
+    @current_state = :beginning
+    @master =        opts.fetch :master, {}
   end
 end
