@@ -1,13 +1,15 @@
 require 'minitest/autorun'
 require 'pry'
 require 'test_helper.rb'
+require_relative 'code_runner_interface_test'
 require_relative '../lib/code_runner'
 
 class CodeRunnerTest < MiniTest::Test
-
   def setup
     @cr = CodeRunner.new
   end
+
+  include CodeRunnerInterfaceTest
 
   def test_default_transforms_and_actions_do_not_alter_line
     assert_equal 'a line', @cr.call('a line')

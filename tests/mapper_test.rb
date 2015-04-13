@@ -7,7 +7,9 @@ require_relative '../lib/fake_code_runner.rb'
 
 class MapperTest < MiniTest::Test
   def setup
-    @mapper = Mapper.new(foreman: FakeForeman.new, coderunner: FakeCodeRunner.new)
+    @mapper = Mapper.new( foreman: FakeForeman.new( coderunner: FakeCodeRunner.new,
+                                                    plan:       FakePlan.new ),
+                          coderunner: FakeCodeRunner.new)
     @lines = ["first\n", "second\n"]
   end
 

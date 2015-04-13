@@ -1,8 +1,8 @@
 class FakePlan
   attr_accessor :current_state
   def initialize(opts={})
-    @master =        opts.fetch :master, {}
     @current_state = :beginning
+    @master =        opts.fetch :master, {}
   end
 
   def transition(line)
