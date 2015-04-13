@@ -21,6 +21,6 @@ private
     event = plan.transition(line)
     coderunner.actions = event[:actions]
     coderunner.transforms = event[:transforms]
-    plan.current_state = event[:new_state]
+    plan.current_state = event[:new_state] if event[:new_state]
   end
 end

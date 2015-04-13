@@ -37,11 +37,11 @@ _check_ **must** return true or false. It **should not** alter _line_ nor have o
 
 _new_state_ can be any valid state including the current state. It must be a symbol.
 
-_actions_ can be either nil or and array (possibly empty) of actions. If nil is provided _coderunner.actions_ will not be changed by this rule
+_actions_ can be either nil or and array (possibly empty) of actions. If nil is provided _coderunner.actions_ will not be changed by this rule.
 
 An _action_ is not a line transform and does not affect the line flowing through the code runner. It **must** return _line_ for use by the next action in _actions_. An action may create "side effects" such as printing a reformatted line to a file.
 
-_transforms_ can be either nil or and array (possibly empty) of transforms. If nil is provided _coderunner.transforms will not be changed by this rule
+_transforms_ can be either nil or and array (possibly empty) of transforms. If nil is provided _coderunner.transforms_ will not be changed by this rule.
 
 A _transform_ may transform _line_. It **must** return the transformed _line_ for use by the next transform in _transforms_. It **should not** have side effects. eg. push the transformed _line_ into a file.
 

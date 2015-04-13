@@ -8,6 +8,11 @@ class FakePlan
         new_state: :middle,
         actions: [],
         transforms: [] }
+    when 'new state is nil'    # an event
+      { check: ->(line) {true},
+        new_state: nil,
+        actions: [],
+        transforms: [] }
     else
       { check: ->(line) {false},
         new_state: :beginning,

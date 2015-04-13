@@ -25,4 +25,10 @@ class ForemanTest < MiniTest::Test
     @fm.call('will not match')
     assert_equal :beginning, @fm.current_state
   end
+
+  def test_new_state_nil_in_rule_leaves_current_state_unchanged
+    binding.pry
+    @fm.call('new state is nil')
+    assert_equal :beginning, @fm.current_state
+  end
 end
