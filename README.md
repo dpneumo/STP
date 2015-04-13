@@ -75,7 +75,7 @@ ToDo:
   1. Fix ReadMe.
   2. Improve naming throughout the code base to align names with function.
   3. Cleanup Forman interaction with Plan.
-  4. Cleanup Stp initialization.
-        initial_transforms aren't required and make no sense in this context.
+  4. ~~Cleanup Stp initialization.~~
+        ~~initial_transforms aren't required and make no sense in this context.~~
 
 **NB:** This is described in reference to a document that acts like or can be coerced to be an array of strings. However, in reality an array of any objects can be supplied if the lambdas in each rule behave correctly when called with the objects.

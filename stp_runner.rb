@@ -14,12 +14,12 @@ end
 
 plan = { beginning: [ { check: ->(line) { acheck line },
                         new_state: :middle,
-                        actions: [],
+                        actions: nil,
                         transforms: [->(line) { line.upcase   }] },
                       { check: ->(line) { true },
                         new_state: :beginning,
-                        actions: [],
-                        transforms: [->(line) { line          }] }  ],
+                        actions: nil,
+                        transforms: nil } ],
 
           middle:    [ {check: ->(line) { /at no/.match line },
                         new_state: :ending,
@@ -28,7 +28,7 @@ plan = { beginning: [ { check: ->(line) { acheck line },
                       { check: ->(line) { true },
                         new_state: :middle,
                         actions: [],
-                        transforms: [->(line) { line.upcase          }] }  ],
+                        transforms: nil }  ],
 
           ending:    [ {check: ->(line) { /On dear/.match line },
                         new_state: :beginning,
@@ -37,10 +37,8 @@ plan = { beginning: [ { check: ->(line) { acheck line },
                       { check: ->(line) { true },
                         new_state: :ending,
                         actions: [],
-                        transforms: [->(line) { line.downcase          }] }  ]
+                        transforms: nil }  ]
        }
-
-initial_transforms = [->(line) { nil }]
 
 document =  [ "departure\n",
               "Prevailed sincerity\n",
@@ -49,6 +47,6 @@ document =  [ "departure\n",
               "On dear rent\n",
               "smart there\n" ]
 
-stp = STP.new( plan: plan, initial_transforms: initial_transforms, document: document )
+stp = STP.new( plan: plan, document: document )
 stp.each {|line| puts line }
 

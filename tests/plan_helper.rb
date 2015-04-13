@@ -1,18 +1,9 @@
 module PlanHelper
-
   # Checks
-  def nothing_happened
-    ->(line) { true }
-  end
-  def prevailed
-    ->(line) { /Prevailed/.match line }
-  end
-  def at_no
-    ->(line) { /at no/.match line }
-  end
-  def on_dear
-    ->(line) { /On dear/.match line }
-  end
+  def nothing_happened; ->(line) { true };                   end
+  def prevailed;        ->(line) { /Prevailed/.match line }; end
+  def at_no;            ->(line) { /at no/.match line };     end
+  def on_dear;          ->(line) { /On dear/.match line };   end
 
   # Actions
   def do_nothing; ->(line) {}; end
@@ -65,5 +56,4 @@ module PlanHelper
       actions: nil,
       transforms: nil }
   end
-
 end

@@ -15,8 +15,6 @@ plan = { beginning: [ rpt_start_evnt, skip_line_evnt ],
          wait4rpt:  [ rpt_start_evnt, skip_line_evnt ]
        }
 
-beginning_lambda = ->(line) { nil }
-
 document = <<EOP
 asdf
 Prevailed sincerity behaviour
@@ -26,5 +24,5 @@ On dear rent if girl view. First on
 smart there he sense. Earnestly
 EOP
 
-stp = STP.new( plan: plan, beginning_lambda: beginning_lambda, document: document )
+stp = STP.new( plan: plan, document: document )
 stp.each {|line|  }

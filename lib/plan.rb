@@ -9,8 +9,9 @@ private
   attr_reader :master
 
   def initialize(opts={})
-    @master =        opts.fetch :master,         {}
     @current_state = opts.fetch :initial_state,  :beginning
+    @master =        opts.fetch :master,         {beginning: [ {check: ->(line) { true }, new_state: :beginning,
+                                                  actions: nil, transforms: nil } ]}
   end
 
   def protocol
