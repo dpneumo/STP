@@ -35,18 +35,20 @@ This is a line oriented parser. It is designed to support both transforming each
 
 _check_ **must** return true or false. It **should not** alter _line_ nor have other side effects.
 
-_new_state_ must be any valid state including the current state. It must be a symbol.
+_new_state_ can be any valid state including the current state. It must be a symbol.
 
-_actions_ must be either nil or and array (possibly empty) of actions. If nil is provided _coderunner.actions_ will not be changed by this rule
+_actions_ can be either nil or and array (possibly empty) of actions. If nil is provided _coderunner.actions_ will not be changed by this rule
 
-An _action_ is not a line transform and does not affect the line flowing through the code runner. An action may create "side effects" such as printing a reformatted line to a file.
+An _action_ is not a line transform and does not affect the line flowing through the code runner. It **must** return _line_ for use by the next action in _actions_. An action may create "side effects" such as printing a reformatted line to a file.
 
-_transforms_ must be either nil or and array (possibly empty) of transforms. If nil is provided _coderunner.transforms will not be changed by this rule
+_transforms_ can be either nil or and array (possibly empty) of transforms. If nil is provided _coderunner.transforms will not be changed by this rule
 
-A _transform_ may transform _line_. It **must** return either the unaltered _line_, the transformed _line_ or nil. It **should not** have side effects. eg. push the transformed _line_ into a file.
+A _transform_ may transform _line_. It **must** return the transformed _line_ for use by the next transform in _transforms_. It **should not** have side effects. eg. push the transformed _line_ into a file.
 
 
 ###Summary of the state machine internals:
+
+As STP is started it is passed a document and a plan. The STP instance creates _mapper_, _foreman_,and _coderunner_. _mapper_ is passed the document for processing.
 
 As each _line_ of the document is processed by _mapper_ it is passed to _foreman_ to check for a possible state change. _Foreman_ checks _line_ against the rules defined in the protocol for the current state. Each _line_ presented is treated as a new event. The first rule that returns true for _line_ is used to select the event response. It is expected that _line_ will match one of the rules defined for the current state. The last rule in the current state protocol should always match _line_.
 

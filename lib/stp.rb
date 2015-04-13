@@ -26,7 +26,7 @@ private
     @plan = Plan.new(master: opts.fetch(:plan, nil))
 
     @code_runner = CodeRunner.new
-    @foreman =     Foreman.new( coderunner: code_runner, plan: @plan )
+    @foreman =     Foreman.new( coderunner: code_runner, plan: plan )
     @mapper =      Mapper.new(  coderunner: code_runner, foreman: foreman )
   end
 
